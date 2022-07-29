@@ -5,6 +5,8 @@
     text-align: center;
     background-image: url("../img/backgroundGame.jpg");
     background-size: cover;
+    margin: 0;
+    padding: 0;
 }
 
 .title {
@@ -15,7 +17,7 @@
 }
 
 .game-body {
-    display: flex;
+    display: none;
 }
 
 .right {
@@ -42,4 +44,60 @@ canvas#tetris {
 
 canvas#nextPiece {
     width: 60%;
+}
+
+.btn-group {
+    width: 100%;
+    max-width: 210px;
+    text-align: left;
+}
+
+.btn {
+    width: 100%;
+    font-size: 1em;
+    color: #666;
+    border-radius: 5px;
+    padding: 10px;
+    background: #e2e2e2;
+    background: -moz-linear-gradient(top, #e2e2e2 0%, #dbdbdb 12%, #d1d1d1 64%, #fefefe 100%);
+    background: -webkit-linear-gradient(top, #e2e2e2 0%, #dbdbdb 12%, #d1d1d1 64%, #fefefe 100%);
+    background: linear-gradient(to bottom, #e2e2e2 0%, #dbdbdb 12%, #d1d1d1 64%, #fefefe 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType = 0);
+
+}
+
+.background-tetris {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.ui-pause {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 200px;
+    margin-top: -100px;
+    margin-left: -150px;
+    padding: 25px;
+    background: #e0f3fa;
+    background: -moz-linear-gradient(top, #e0f3fa 0%, #d8f0fc 12%, #b8e2f6 64%, #b6dffd 100%);
+    background: -webkit-linear-gradient(top, #e0f3fa 0%, #d8f0fc 12%, #b8e2f6 64%, #b6dffd 100%);
+    background: linear-gradient(to bottom, #e0f3fa 0%, #d8f0fc 12%, #b8e2f6 64%, #b6dffd 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0f3fa', endColorstr='#b6dffd', GradientType = 0);
+    box-shadow: 0 8px 6px -6px black;
+    border-radius: 10px;
+    display: none;
+}
+
+.title-menu {
+    font-weight: bold;
+    text-align: center;
+    font-size: 2em;
+    color: #666;
+    text-shadow: 1px 1px white, -1px -1px #444;
 }

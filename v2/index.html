@@ -7,7 +7,20 @@
 </head>
 <body class="game">
     <div class="title">Tetris</div>
-    <div class="game-body">
+    <div class="background-tetris" id="background-tetris">
+        <div class="ui-main-menu" id="ui-main-menu">
+            <button class="btn" onclick="gameStart()">Jogar</button>
+            <button class="btn" onclick="">Como Jogar</button>
+        </div>
+        <div class="ui-pause" id="ui-pause">
+            <br clear="all">
+            <div class="title-menu">
+                Pause
+            </div>
+            <button onclick="pauseNow(false)" class="btn">Continuar</button>
+        </div>
+    </div>
+    <div class="game-body" id="game-body">
         <div class="positions right">
             <canvas id="tetris" width="200" height="400"></canvas>
         </div>
@@ -27,6 +40,9 @@
             <div class="lateral-box">
                 Level:
                 <div id="level"></div>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="pauseNow(true)">Pause</button>
             </div>
         </div>
     </div>

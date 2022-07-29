@@ -1,6 +1,7 @@
 let lastTime = 0;
 let dropInterval = 1000;
 let dropCounter = 0;
+let pause = false;
 
 const canvas = document.getElementById("tetris");
 const canvasNextPiece = document.getElementById("nextPiece");
@@ -30,48 +31,49 @@ context.scale(20, 20);
 contextNextPiece.scale(19, 19);
 
 function createPiece(type) {
-    if (type === 'T') {
-        return [
-            [0, 0, 0],
-            [1, 1, 1],
-            [0, 1, 0],
-        ]
-    } else if (type === 'O') {
-        return [
-            [2, 2],
-            [2, 2],
-        ]
-    } else if (type === 'L') {
-        return [
-            [0, 3, 0],
-            [0, 3, 0],
-            [0, 3, 3],
-        ]
-    } else if (type === 'J') {
-        return [
-            [0, 4, 0],
-            [0, 4, 0],
-            [4, 4, 0],
-        ]
-    } else if (type === 'I') {
-        return [
-            [0, 5, 0, 0],
-            [0, 5, 0, 0],
-            [0, 5, 0, 0],
-            [0, 5, 0, 0],
-        ]
-    } else if (type === 'S') {
-        return [
-            [0, 6, 6],
-            [6, 6, 0],
-            [0, 0, 0],
-        ]
-    } else if (type === 'Z') {
-        return [
-            [7, 7, 0],
-            [0, 7, 7],
-            [0, 0, 0],
-        ]
+    switch (type) {
+        case 'T':
+            return [
+                [0, 0, 0],
+                [1, 1, 1],
+                [0, 1, 0],
+            ]
+        case 'O':
+            return [
+                [2, 2],
+                [2, 2],
+            ]
+        case 'L':
+            return [
+                [0, 3, 0],
+                [0, 3, 0],
+                [0, 3, 3],
+            ]
+        case 'J':
+            return [
+                [0, 4, 0],
+                [0, 4, 0],
+                [4, 4, 0],
+            ]
+        case 'I':
+            return [
+                [0, 5, 0, 0],
+                [0, 5, 0, 0],
+                [0, 5, 0, 0],
+                [0, 5, 0, 0],
+            ]
+        case 'S':
+            return [
+                [0, 6, 6],
+                [6, 6, 0],
+                [0, 0, 0],
+            ]
+        case 'Z':
+            return [
+                [7, 7, 0],
+                [0, 7, 7],
+                [0, 0, 0],
+            ]
     }
 }
 
@@ -163,6 +165,9 @@ function gridSweep() {
 }
 
 function update(time = 0) {
+    if (pause) {
+        return;
+    }
     const deltaTime = time - lastTime;
     lastTime = time;
     dropCounter += deltaTime;
@@ -236,6 +241,26 @@ function playerReset() {
     }
 }
 
+function pauseNow(pauseAction) {
+    pause = pauseAction;
+    if (pause) {
+        document.getElementById('background-tetris').style.display=" block";
+    } else {
+        document.getElementById('background-tetris').style.display = "none";
+        update();
+    }
+}
+
+function gameStart() {
+    document.getElementById('background-tetris').style.display = "none"
+    document.getElementById('ui-main-menu').style.display = "none"
+    document.getElementById('game-body').style.display = "flex"
+    playerReset();
+    updateScore();
+    update();
+    //36:43
+}
+
 function updateScore() {
     document.getElementById('score').innerHTML = player.score;
     document.getElementById('level').innerHTML = player.level;
@@ -243,17 +268,18 @@ function updateScore() {
 }
 
 document.addEventListener("keydown", event => {
-    if (event.keyCode === 40) {
-        playerDrop()
-    } else if (event.keyCode === 37) {
-        playerMove(-1)
-    } else if (event.keyCode === 39) {
-        playerMove(1)
-    } else if (event.keyCode === 32) {
-        playerRotate();
+    switch (event.keyCode) {
+        case 40:
+            playerDrop()
+            break;
+        case 37:
+            playerMove(-1)
+            break;
+        case 39:
+            playerMove(1)
+            break;
+        case 32:
+            playerRotate();
+            break;
     }
 });
-
-playerReset();
-updateScore();
-update();
