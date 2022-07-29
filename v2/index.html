@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Tetris</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-    <canvas id="tetris" width="200" height="400"></canvas>
+<body class="game">
+    <div class="title">Tetris</div>
+    <div class="game-body">
+        <div class="positions right">
+            <canvas id="tetris" width="200" height="400"></canvas>
+        </div>
+        <div class="positions">
+            <div class="lateral-box">
+                Next:
+                <canvas id="nextPiece" width="100" height="100"></canvas>
+            </div>
+            <div class="lateral-box">
+                Score:
+                <div id="score"></div>
+            </div>
+            <div class="lateral-box">
+                Lines:
+                <div id="lines"></div>
+            </div>
+            <div class="lateral-box">
+                Level:
+                <div id="level"></div>
+            </div>
+        </div>
+    </div>
 <script src="js/tetris.js"></script>
 </body>
 </html>
