@@ -4,6 +4,7 @@ let dropCounter = 0;
 let pause = false;
 let mainTheme = false;
 let mainThemeAnteriorState = false;
+let maxLevel = 17;
 
 const canvas = document.getElementById("tetris");
 const canvasNextPiece = document.getElementById("nextPiece");
@@ -166,9 +167,14 @@ function gridSweep() {
         rowCount += 2;
 
         if (player.lines % 4 === 0) {
-            document.getElementById("level-up").volume = 0.3;
-            document.getElementById("level-up").play();
-            player.level++;
+            if (player.level < maxLevel) {
+                document.getElementById("level-up").volume = 0.3;
+                document.getElementById("level-up").play();
+                document.getElementById("main-theme").playbackRate += 0.05;
+                player.level++;
+            } else if (player.level === maxLevel) {
+                player.level = 'Max'
+            }
         }
     }
 }
@@ -240,7 +246,7 @@ function rotate(matriz) {
 
 function playerReset() {
     const pieces = 'ILJOTSZ';
-    dropInterval = 1000 - (player.level * 100);
+    dropInterval = 1000 - (player.level * 50);
 
     if (player.nextPiece === null) {
         player.matriz = createPiece(pieces[pieces.length * Math.random() | 0]);
@@ -307,6 +313,7 @@ function gameStart() {
 }
 
 function resetGame() {
+    document.getElementById("main-theme").playbackRate = 1.0;
     grid.forEach(row => row.fill(0));
     player.score = 0;
     player.level = 0;
