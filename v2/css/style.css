@@ -30,16 +30,17 @@
 }
 
 canvas#tetris {
-    border: solid .2em #FFF;
+    border: solid .2em #bbbbbb;
     border-radius: 5px;
     height: 80vh;
 }
 
 .lateral-box {
-    border: solid .2em #FFF;
+    border: solid .2em #bbbbbb;
     margin-bottom: 20px;
     max-width: 200px;
     background-color: #000;
+    border-radius: 5px;
 }
 
 canvas#nextPiece {
@@ -63,7 +64,6 @@ canvas#nextPiece {
     background: -webkit-linear-gradient(top, #e2e2e2 0%, #dbdbdb 12%, #d1d1d1 64%, #fefefe 100%);
     background: linear-gradient(to bottom, #e2e2e2 0%, #dbdbdb 12%, #d1d1d1 64%, #fefefe 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType = 0);
-
 }
 
 .background-tetris {
@@ -72,25 +72,34 @@ canvas#nextPiece {
     left: 0;
     width: 100%;
     height: 100vh;
+    border-radius: 5px;
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.ui-pause {
+.modal {
     position: fixed;
+    padding: 25px;
+    background-image: linear-gradient(to left bottom, #010711, #002048, #003485, #0044c3, #054dff);
+    box-shadow: 0 8px 6px -6px black;
+    border-radius: 10px;
+    border-color: black;
+    margin-top: -100px;
+    margin-left: -150px;
+}
+
+.ui-pause {
     top: 50%;
     left: 50%;
     width: 300px;
     height: 200px;
-    margin-top: -100px;
-    margin-left: -150px;
-    padding: 25px;
-    background: #e0f3fa;
-    background: -moz-linear-gradient(top, #e0f3fa 0%, #d8f0fc 12%, #b8e2f6 64%, #b6dffd 100%);
-    background: -webkit-linear-gradient(top, #e0f3fa 0%, #d8f0fc 12%, #b8e2f6 64%, #b6dffd 100%);
-    background: linear-gradient(to bottom, #e0f3fa 0%, #d8f0fc 12%, #b8e2f6 64%, #b6dffd 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0f3fa', endColorstr='#b6dffd', GradientType = 0);
-    box-shadow: 0 8px 6px -6px black;
-    border-radius: 10px;
+    display: none;
+}
+
+.ui-how-to-play {
+    top: 40%;
+    left: 35%;
+    width: 700px;
+    height: 300px;
     display: none;
 }
 
@@ -100,4 +109,32 @@ canvas#nextPiece {
     font-size: 2em;
     color: #666;
     text-shadow: 1px 1px white, -1px -1px #444;
+}
+
+.btn-left {
+    float: left;
+    width: 145px;
+    margin-right: 5px;
+}
+
+.btn-right {
+    float: right;
+    width: 145px;
+    margin-left: 5px;
+}
+
+.btn-end {
+    margin-top: 250px;
+    width: 145px;
+    margin-left: 5px;
+}
+
+.ui-main-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 200px;
+    margin-left: -150px;
+    margin-top: -100px;
 }

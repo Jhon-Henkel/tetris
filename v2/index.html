@@ -4,48 +4,76 @@
     <meta charset="UTF-8">
     <title>Tetris</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
 </head>
+
 <body class="game">
+
+    <audio id="main-theme" src="sounds/mainTheme.mp3" loop></audio>
+    <audio id="line-complete" src="sounds/lineComplete.mp3"></audio>
+    <audio id="level-up" src="sounds/levelUp.mp3"></audio>
+    <audio id="game-over" src="sounds/gameOver.mp3"></audio>
+
     <div class="title">Tetris</div>
-    <div class="background-tetris" id="background-tetris">
-        <div class="ui-main-menu" id="ui-main-menu">
-            <button class="btn" onclick="gameStart()">Jogar</button>
-            <button class="btn" onclick="">Como Jogar</button>
-        </div>
-        <div class="ui-pause" id="ui-pause">
-            <br clear="all">
-            <div class="title-menu">
-                Pause
+        <div class="background-tetris" id="background-tetris">
+
+            <div class="ui-main-menu" id="ui-main-menu">
+                <button class="btn" onclick="gameStart()">Let's Play</button>
+                <button class="btn" onclick="howToPlay(true)">Como Jogar</button>
             </div>
-            <button onclick="pauseNow(false)" class="btn">Continuar</button>
-        </div>
-    </div>
-    <div class="game-body" id="game-body">
-        <div class="positions right">
-            <canvas id="tetris" width="200" height="400"></canvas>
-        </div>
-        <div class="positions">
-            <div class="lateral-box">
-                Next:
-                <canvas id="nextPiece" width="100" height="100"></canvas>
+
+            <div class="ui-pause modal" id="ui-pause">
+                <div class="title-menu">
+                    Pause
+                </div>
+                <br clear="all">
+                <div class="btn-left">
+                    <button onclick="pauseNow(false)" class="btn">Voltar</button>
+                </div>
+                <div class="btn-right">
+                    <button onclick="exitGame()" class="btn">Sair</button>
+                </div>
+                <br clear="all">
             </div>
-            <div class="lateral-box">
-                Score:
-                <div id="score"></div>
-            </div>
-            <div class="lateral-box">
-                Lines:
-                <div id="lines"></div>
-            </div>
-            <div class="lateral-box">
-                Level:
-                <div id="level"></div>
-            </div>
-            <div class="btn-group">
-                <button class="btn" onclick="pauseNow(true)">Pause</button>
+
+            <div class="ui-how-to-play modal" id="ui-how-to-play">
+                <div style="text-align: initial">
+                    espaço = rotacionar <br>
+                    esc = pausar/continuar <br>
+                    seta esquerda = move peça para esquerda
+                    seta direita = move peça para direita
+                    seta baixo = move peça para baixo
+                </div>
+                <button class="btn btn-end" onclick="howToPlay(false)">Fechar</button>
             </div>
         </div>
-    </div>
-<script src="js/tetris.js"></script>
+
+        <div class="game-body" id="game-body">
+            <div class="positions right">
+                <canvas id="tetris" width="200" height="400"></canvas>
+            </div>
+            <div class="positions">
+                <div class="lateral-box">
+                    Next:
+                    <canvas id="nextPiece" width="100" height="100"></canvas>
+                </div>
+                <div class="lateral-box">
+                    Score:
+                    <div id="score"></div>
+                </div>
+                <div class="lateral-box">
+                    Lines:
+                    <div id="lines"></div>
+                </div>
+                <div class="lateral-box">
+                    Level:
+                    <div id="level"></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" onclick="pauseNow(true)">Pause</button>
+                </div>
+            </div>
+        </div>
+    <script src="js/tetris.js"></script>
 </body>
 </html>

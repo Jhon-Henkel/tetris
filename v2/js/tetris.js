@@ -152,6 +152,8 @@ function gridSweep() {
             }
         }
         const row = grid.splice(y, 1)[0].fill(0)
+        document.getElementById("line-complete").volume = 0.2;
+        document.getElementById("line-complete").play();
         grid.unshift(row);
         ++y;
 
@@ -159,6 +161,8 @@ function gridSweep() {
         player.lines++;
         rowCount += 2;
         if (player.lines % 3 === 0) {
+            document.getElementById("level-up").volume = 0.3;
+            document.getElementById("level-up").play();
             player.level++;
         }
     }
@@ -233,20 +237,29 @@ function playerReset() {
     player.pos.x = (grid[0].length / 2 | 0) - (player.matriz[0].length / 2 | 0);
     player.pos.y = 0;
     if (collide(grid, player)) {
-        grid.forEach(row => row.fill(0));
-        player.score = 0;
-        player.level = 0;
-        player.lines = 0;
-        updateScore();
+        document.getElementById("main-theme").pause();
+        document.getElementById("game-over").volume = 0.1;
+        document.getElementById("game-over").play();
+        pause = true;
+        // grid.forEach(row => row.fill(0));
+        // player.score = 0;
+        // player.level = 0;
+        // player.lines = 0;
+        // updateScore();
     }
 }
 
 function pauseNow(pauseAction) {
     pause = pauseAction;
     if (pause) {
-        document.getElementById('background-tetris').style.display=" block";
+        document.getElementById('background-tetris').style.display= "block";
+        document.getElementById('ui-pause').style.display= "block";
+        document.getElementById("main-theme").pause();
+
     } else {
         document.getElementById('background-tetris').style.display = "none";
+        document.getElementById('ui-pause').style.display= "none";
+        document.getElementById("main-theme").play();
         update();
     }
 }
@@ -255,10 +268,28 @@ function gameStart() {
     document.getElementById('background-tetris').style.display = "none"
     document.getElementById('ui-main-menu').style.display = "none"
     document.getElementById('game-body').style.display = "flex"
+    document.getElementById("main-theme").play();
+    document.getElementById("main-theme").volume = 0.1;
+    pause = false;
     playerReset();
     updateScore();
     update();
-    //36:43
+}
+
+function exitGame() {
+    document.getElementById('game-body').style.display = "none";
+    document.getElementById('ui-main-menu').style.display = "block";
+    document.getElementById('ui-pause').style.display = "none";
+    document.getElementById('background-tetris').style.display = "block";
+    document.getElementById("main-theme").pause();
+}
+
+function howToPlay(value) {
+    if (value) {
+        document.getElementById('ui-how-to-play').style.display = "block";
+    } else {
+        document.getElementById('ui-how-to-play').style.display = "none";
+    }
 }
 
 function updateScore() {
@@ -281,5 +312,11 @@ document.addEventListener("keydown", event => {
         case 32:
             playerRotate();
             break;
+        case 27:
+            if (pause) {
+                pauseNow(false)
+            } else {
+                pauseNow(true)
+            }
     }
 });
