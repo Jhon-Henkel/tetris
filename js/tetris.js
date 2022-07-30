@@ -173,7 +173,7 @@ function gridSweep() {
                 document.getElementById("main-theme").playbackRate += 0.05;
                 player.level++;
             } else if (player.level === maxLevel) {
-                player.level = 'Max'
+                document.getElementById('level').innerHTML = 'Max';
             }
         }
     }
@@ -353,8 +353,11 @@ function playPauseMainTheme() {
 
 function updateScore() {
     document.getElementById('score').innerHTML = player.score;
-    document.getElementById('level').innerHTML = player.level;
     document.getElementById('lines').innerHTML = player.lines;
+
+    if (player.level !== maxLevel) {
+        document.getElementById('level').innerHTML = player.level;
+    }
 }
 
 document.addEventListener("keydown", event => {
