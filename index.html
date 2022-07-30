@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Tetris</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+
+<body class="game">
+    <audio id="main-theme" src="sounds/mainTheme.mp3" loop></audio>
+    <audio id="line-complete" src="sounds/lineComplete.mp3"></audio>
+    <audio id="level-up" src="sounds/levelUp.mp3"></audio>
+    <audio id="game-over" src="sounds/gameOver.mp3"></audio>
+
+    <div class="title">Tetris</div>
+        <div class="background-tetris" id="background-tetris">
+
+            <div class="ui-main-menu" id="ui-main-menu">
+                <button class="btn" onclick="gameStart()">
+                    <i class="fa-solid fa-play"></i>
+                    Let's Bora
+                </button>
+                <button class="btn" onclick="howToPlay()">
+                    <i class="fa-solid fa-question"></i>
+                    Como Jogar
+                </button>
+            </div>
+
+            <div class="ui-pause modal-css" id="ui-pause">
+                <div class="title-menu">
+                    Pause
+                </div>
+                <br clear="all">
+                <div class="btn-group ui-pause-btn">
+                    <button onclick="pauseNow(false)" class="btn">
+                        <i class="fa-solid fa-play"></i>
+                        Play
+                    </button>
+                    <button onclick="exitGame()" class="btn">
+                        <i class="fa-solid fa-house"></i>
+                        Sair
+                    </button>
+                </div>
+                <br clear="all">
+            </div>
+        </div>
+
+        <div class="game-body" id="game-body">
+            <div class="positions right">
+                <canvas id="tetris" width="200" height="400"></canvas>
+            </div>
+            <div class="positions">
+                <div class="lateral-box-css">
+                    Next:
+                    <canvas id="nextPiece" width="100" height="100"></canvas>
+                </div>
+                <div class="lateral-box-css">
+                    Score:
+                    <div id="score"></div>
+                </div>
+                <div class="lateral-box-css">
+                    Lines:
+                    <div id="lines"></div>
+                </div>
+                <div class="lateral-box-css">
+                    Level:
+                    <div id="level"></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" onclick="pauseNow(true)">
+                        <i class="fa-solid fa-pause"></i>
+                    </button>
+                    <button class="btn" onclick="playPauseMainTheme()">
+                        <i class="fa-solid fa-volume-xmark"></i>
+                        /
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="js/tetris.js"></script>
+</body>
+</html>
+
+<div class="modal fade" id="how-to-play" tabindex="-1" aria-labelledby="how-to-play-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="how-to-play-modal">
+                    <i class="fa-solid fa-question me-2"></i>
+                    Como jogar:
+                </h5>
+            </div>
+            <div class="modal-body text-dark text-start fs-5">
+                <strong>Seta Esquerda</strong> = move peça para esquerda <br>
+                <strong>Seta Direita</strong> = move peça para direita <br>
+                <strong>Seta Baixo</strong> = move peça para baixo <br>
+                <strong>Espaço</strong> = Rotaciona peça <br>
+                <strong>Esc</strong> = Play/Pause jogo <br>
+                <strong>M</strong> = Play/Pause musica <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary text-dark" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-check"></i>
+                    Ok
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="game-over-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark title-modal" id="game-over-modal-finish">
+                    <i class="fa-solid fa-skull-crossbones ms-2"></i>
+                    <i class="fa-solid fa-skull-crossbones ms-2"></i>
+                    Game Over!
+                    <i class="fa-solid fa-skull-crossbones me-2"></i>
+                    <i class="fa-solid fa-skull-crossbones me-2"></i>
+                </h5>
+            </div>
+            <div class="modal-body text-dark text-start fs-5">
+                Deseja Continuar
+                <i class="fa-solid fa-question ms-1"></i>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary text-dark" data-bs-dismiss="modal" onclick="restartGame()">
+                    <i class="fa-solid fa-check ms-2"></i>
+                    Sim, sou teimoso!
+                </button>
+                <button type="button" class="btn btn-primary text-dark" data-bs-dismiss="modal" onclick="exitGame()">
+                    <i class="fa-solid fa-xmark ms-2"></i>
+                    Não, pra min já deu!
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

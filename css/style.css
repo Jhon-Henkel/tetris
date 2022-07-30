@@ -32,13 +32,14 @@
 canvas#tetris {
     border: solid .2em #bbbbbb;
     border-radius: 5px;
-    height: 80vh;
+    height: 83vh;
 }
 
-.lateral-box {
+.lateral-box-css {
     border: solid .2em #bbbbbb;
-    margin-bottom: 20px;
-    max-width: 200px;
+    margin-bottom: 1vh;
+    max-width: 25vh;
+    font-size: 4vh;
     background-color: #000;
     border-radius: 5px;
 }
@@ -49,8 +50,9 @@ canvas#nextPiece {
 
 .btn-group {
     width: 100%;
-    max-width: 210px;
+    max-width: 25vh;
     text-align: left;
+    display: flex !important;
 }
 
 .btn {
@@ -66,6 +68,10 @@ canvas#nextPiece {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType = 0);
 }
 
+.title-modal {
+    margin: auto
+}
+
 .background-tetris {
     position: absolute;
     top: 0;
@@ -76,7 +82,13 @@ canvas#nextPiece {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.modal {
+.ui-pause-btn {
+    margin-top: -7vh;
+    margin-inline: auto;
+}
+
+
+.modal-css {
     position: fixed;
     padding: 25px;
     background-image: linear-gradient(to left bottom, #010711, #002048, #003485, #0044c3, #054dff);
@@ -95,38 +107,12 @@ canvas#nextPiece {
     display: none;
 }
 
-.ui-how-to-play {
-    top: 40%;
-    left: 35%;
-    width: 700px;
-    height: 300px;
-    display: none;
-}
-
 .title-menu {
     font-weight: bold;
     text-align: center;
     font-size: 2em;
     color: #666;
     text-shadow: 1px 1px white, -1px -1px #444;
-}
-
-.btn-left {
-    float: left;
-    width: 145px;
-    margin-right: 5px;
-}
-
-.btn-right {
-    float: right;
-    width: 145px;
-    margin-left: 5px;
-}
-
-.btn-end {
-    margin-top: 250px;
-    width: 145px;
-    margin-left: 5px;
 }
 
 .ui-main-menu {

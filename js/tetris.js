@@ -2,6 +2,8 @@ let lastTime = 0;
 let dropInterval = 1000;
 let dropCounter = 0;
 let pause = false;
+let mainTheme = false;
+let mainThemeAnteriorState = false;
 
 const canvas = document.getElementById("tetris");
 const canvasNextPiece = document.getElementById("nextPiece");
@@ -146,11 +148,13 @@ function draw() {
 function gridSweep() {
     let rowCount = 1;
     outer: for (let y = grid.length - 1; y > 0; --y) {
+
         for(let x = 0; x < grid[y].length; ++x) {
             if (grid[y][x]  === 0) {
                 continue outer;
             }
         }
+
         const row = grid.splice(y, 1)[0].fill(0)
         document.getElementById("line-complete").volume = 0.2;
         document.getElementById("line-complete").play();
@@ -160,7 +164,8 @@ function gridSweep() {
         player.score += rowCount * 10;
         player.lines++;
         rowCount += 2;
-        if (player.lines % 3 === 0) {
+
+        if (player.lines % 4 === 0) {
             document.getElementById("level-up").volume = 0.3;
             document.getElementById("level-up").play();
             player.level++;
@@ -172,18 +177,22 @@ function update(time = 0) {
     if (pause) {
         return;
     }
+
     const deltaTime = time - lastTime;
     lastTime = time;
     dropCounter += deltaTime;
+
     if (dropCounter > dropInterval) {
         playerDrop();
     }
+
     draw();
     requestAnimationFrame(update);
 }
 
 function playerDrop() {
     player.pos.y++;
+
     if (collide(grid, player)) {
         player.pos.y--;
         merge(grid, player);
@@ -191,11 +200,13 @@ function playerDrop() {
         gridSweep();
         updateScore();
     }
+
     dropCounter = 0;
 }
 
 function playerMove(direction) {
     player.pos.x += direction;
+
     if (collide(grid, player)) {
         player.pos.x -= direction;
     }
@@ -205,9 +216,11 @@ function playerRotate() {
     const pos = player.pos.x;
     let offset = 1;
     rotate(player.matriz);
+
     while (collide(grid, player)) {
         player.pos.x += offset;
         offset = -(offset + (offset > 0 ? 1 : -1));
+
         if (offset > player.matriz[0].length) {
             rotate(player.matriz);
             player.pos.x = pos;
@@ -228,38 +241,55 @@ function rotate(matriz) {
 function playerReset() {
     const pieces = 'ILJOTSZ';
     dropInterval = 1000 - (player.level * 100);
+
     if (player.nextPiece === null) {
         player.matriz = createPiece(pieces[pieces.length * Math.random() | 0]);
     } else {
         player.matriz = player.nextPiece;
     }
+
     player.nextPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
     player.pos.x = (grid[0].length / 2 | 0) - (player.matriz[0].length / 2 | 0);
     player.pos.y = 0;
+
     if (collide(grid, player)) {
-        document.getElementById("main-theme").pause();
+
+        if (mainTheme === true) {
+            playPauseMainTheme();
+        }
+
         document.getElementById("game-over").volume = 0.1;
         document.getElementById("game-over").play();
         pause = true;
-        // grid.forEach(row => row.fill(0));
-        // player.score = 0;
-        // player.level = 0;
-        // player.lines = 0;
-        // updateScore();
+
+        let modalGameOver = new bootstrap.Modal(document.getElementById('game-over-modal'), {
+            backdrop: false,
+            keyboard: false
+        });
+
+        modalGameOver.show();
     }
 }
 
 function pauseNow(pauseAction) {
     pause = pauseAction;
+
     if (pause) {
         document.getElementById('background-tetris').style.display= "block";
         document.getElementById('ui-pause').style.display= "block";
-        document.getElementById("main-theme").pause();
+        mainThemeAnteriorState = mainTheme;
 
+        if (mainTheme === true) {
+            playPauseMainTheme()
+        }
     } else {
         document.getElementById('background-tetris').style.display = "none";
         document.getElementById('ui-pause').style.display= "none";
-        document.getElementById("main-theme").play();
+
+        if (mainThemeAnteriorState) {
+            playPauseMainTheme();
+        }
+
         update();
     }
 }
@@ -268,7 +298,7 @@ function gameStart() {
     document.getElementById('background-tetris').style.display = "none"
     document.getElementById('ui-main-menu').style.display = "none"
     document.getElementById('game-body').style.display = "flex"
-    document.getElementById("main-theme").play();
+    playPauseMainTheme()
     document.getElementById("main-theme").volume = 0.1;
     pause = false;
     playerReset();
@@ -276,19 +306,41 @@ function gameStart() {
     update();
 }
 
+function resetGame() {
+    grid.forEach(row => row.fill(0));
+    player.score = 0;
+    player.level = 0;
+    player.lines = 0;
+    updateScore();
+}
+
+function restartGame() {
+    resetGame()
+    gameStart()
+}
+
 function exitGame() {
     document.getElementById('game-body').style.display = "none";
     document.getElementById('ui-main-menu').style.display = "block";
     document.getElementById('ui-pause').style.display = "none";
     document.getElementById('background-tetris').style.display = "block";
-    document.getElementById("main-theme").pause();
+    mainTheme = true;
+    resetGame();
+    playPauseMainTheme()
 }
 
-function howToPlay(value) {
-    if (value) {
-        document.getElementById('ui-how-to-play').style.display = "block";
+function howToPlay() {
+    let modalHowToPlay = new bootstrap.Modal(document.getElementById('how-to-play'))
+    modalHowToPlay.show();
+}
+
+function playPauseMainTheme() {
+    if (mainTheme === false) {
+        document.getElementById("main-theme").play();
+        mainTheme = true;
     } else {
-        document.getElementById('ui-how-to-play').style.display = "none";
+        document.getElementById("main-theme").pause();
+        mainTheme = false;
     }
 }
 
@@ -318,5 +370,9 @@ document.addEventListener("keydown", event => {
             } else {
                 pauseNow(true)
             }
+            break;
+        case 77:
+            playPauseMainTheme();
+            break;
     }
 });
