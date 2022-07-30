@@ -9,6 +9,19 @@
     padding: 0;
 }
 
+.margin-bac {
+    margin: -31px;
+}
+
+.btn-buy-me-a-coffee {
+    height: 112px;
+}
+
+.btn-big-none-decoration{
+    text-decoration: none;
+    font-size: 58px
+}
+
 .title {
     font-weight: bold;
     text-align: center;
