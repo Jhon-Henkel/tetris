@@ -15,6 +15,14 @@ Neste projeto tem as seguintes features:
 - Visualização da próxima peça;
 - Play/Pause do game e música individualmente;
 
+e as seguintes tecnologias:
+
+- Javascript
+- CSS
+- HTML
+- Bootstrap
+- Fontawesome
+
 Gostou do projeto? 
 
 Que tal me comprar um
